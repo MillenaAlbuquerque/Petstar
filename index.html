@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="16x16"  href="images/favicon-16x16.png">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="theme-color" content="#ffffff">
+
+<!-- jQuery (obrigatório para o Slick Carousel) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- CSS do Slick Carousel (escolha um dos estilos) -->
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.css"/>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.css"/>
+
+<!-- JavaScript do Slick Carousel -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="style.css">
+    <title>PetStar</title>
+    
+<style>
+
+/* Estilo para o conteúdo da área de administração */
+#adminContent {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}
+
+#adminContent h1 {
+    text-align: center;
+}
+
+/* Estilos gerais da navbar */
+nav ul {
+    list-style-type: none;
+}
+  
+nav ul li {
+    display: inline;
+    margin-right: 20px;
+}
+  
+nav ul li a {
+    text-decoration: none;
+    font-size: 18px;
+}
+ 
+  /* Estilos do modal */
+  .modal {
+    display: none; /* Inicialmente, o modal fica oculto */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    /* Fundo semi-transparente */
+}
+  
+.modal-content {
+    background-color: var(--green);
+    margin: 15% auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 400px; /* Largura do modal */
+    text-align: center;
+}
+  
+.modal-btn {
+    padding: 10px 20px;
+    margin: 10px;
+    background-color: var(--greendark);
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 2px;
+}
+
+.modal h2{
+    color: var(--dark);
+    font-size: 22px;
+    margin: 10px 0;
+    margin-bottom: 2rem;
+    margin-top: 1rem;
+    text-align: center;
+}
+  
+.modal-btn:hover {
+    background-color: #218838;
+}
+  
+/* Botão de fechar o modal */
+.close {
+    color: var(--dark);
+    font-size: 30px;
+    float: right;
+    cursor: pointer;
+}
+.form {
+    padding: 1rem;
+    border: 1px solid #ccc;
+    margin-top: 1rem;
+    background: #f9f9f9;
+    position: relative;
+}
+            
+.linha {
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 1rem;
+}
+            .input-group {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+            .campo {
+                flex: 1;
+                min-width: 200px;
+            }
+            .enviar-btn {
+                margin-top: 1rem;
+                padding: 0.5rem 1rem;
+                background: #28a745;
+                color: white;
+                border: none;
+                cursor: pointer;
+            }
+            #addAnimalFormWrapper,
+            #editAnimalFormWrapper {
+                display: none;
+            }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 1rem;
+            }
+            th, td {
+                border: 1px solid #ddd;
+                padding: 8px;
+            }
+            th {
+                background-color: #f2f2f2;
+            }
+            
+/* Container principal que envolve tudo */
+.animais-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 0;
+    margin: 0; 
+}
+
+/* Ajuste para a seção layout */
+.layout-container {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px; 
+    width: 100%;
+    padding-left: 10px; 
+}
+
+/* Estilo geral do container de filtros */
+#filterContainer {
+    display: flex; /* Utiliza flexbox para organização */
+    flex-direction: column; /* Coloca os elementos em coluna */
+    gap: 10px; /* Espaçamento entre os elementos */
+    margin-left: 30px;
+    margin-top: 5px;
+    max-width: 250px; /* Aumente ou diminua conforme necessário */
+    width: 100%; /* Permite que o filtro ocupe 100% da largura do container pai */
+}
+
+/* Estilo para os inputs de texto e selects */
+#filterContainer input[type="text"],
+#filterContainer select {
+    width: 100%; /* Ocupa toda a largura do container */
+    padding: 10px; /* Espacamento interno */
+    border: 1px solid var(--greendark); /* Borda */
+    border-radius: 8px; /* Bordas arredondadas */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    font-size: 0.8rem; /* Tamanho da fonte */
+    transition: border-color 0.3s, box-shadow 0.3s; /* Transição suave para efeitos */
+}
+
+/* Efeito ao focar nos inputs */
+#filterContainer input[type="text"]:focus,
+#filterContainer select:focus {
+    border-color: var(--green); /* Cor da borda ao focar */
+    box-shadow: 0 0 5px rgba(0, 255, 0, 0.5); /* Sombra ao focar */
+    outline: none; /* Remove o contorno padrão */
+}
+
+.animais-title{
+    text-align: center;
+    margin-top: 2rem;
+    font-size: 2rem;
+    color: var(--dark);
+    margin-bottom: 1rem;  
+}
+
+.descricao {
+    color: gray;
+    font-size: 19px;
+    margin: 10px 0;
+    margin-bottom: 4rem;
+    margin-top: 1rem;
+    text-align: center;
+}
+
+/* Lista de animais */
+#animal-list {
+    display: flex; /* Mude para flex */
+    flex-wrap: wrap; /* Permite que os cards quebrem para a próxima linha */
+    gap: 80px; /* Espaçamento entre os cards */
+    width: 100%;
+    justify-content: center; /* Centraliza os cards horizontalmente */
+}
+
+/* Estilo dos cards de animais */
+.animal {
+    border: 1px solid var(--greendark);
+    box-sizing: border-box;
+    border-radius: 10px;
+    padding: 15px;
+    background-color: #fff;
+    text-align: center;
+    transition: transform 0.3s ease;
+    overflow: hidden;
+    width: 240px; /* Largura fixa */
+    margin: 0; /* Remover margens */
+
+}
+
+.animal:hover {
+    transform: translateY(-5px); /* Eleva o card ao passar o mouse */
+}
+
+/* Estilo para a imagem dos animais */
+.animal img {
+    width: 100%;
+    height: 205px;
+    object-fit: cover; /* Preenche o card com a imagem */
+    border-radius: 5px;
+}
+
+/* Estilo para o nome dos animais */
+.animal-name {
+    font-size: 1.3rem;
+    color: #333;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+/* Estilo para as descrições */
+.animal p {
+    margin: 5px 0;
+    color: #555;
+}
+
+/* Botão "Ver Detalhes" nos cards */
+.animal button {
+    padding: 10px 55px;
+    background-color: var(--greendark);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin-top: 10px;
+}
+
+.animal button:hover {
+    background-color: var(--green);
+}
+
+
+.detalhes-btn{
+    padding: 10px 20px;
+    background-color: var(--greendark);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin-top: 10px;
+}
+
+</style>
+</head>
+<body>
+   <!--Navbar-->
+<header>
+    <nav class="navigation">
+        <a href="#" class="logo">
+            <img class="img-logo" src="images/logoideas.png" alt="Logo PetStar">
+            <h3>PetStar</h3>
+        </a>
+        <ul class="nav-menu">
+            <li class="nav-item"><a onclick="window.location.href = 'index.html';">Inicio</a></li>
+            <li class="nav-item"><a href="index.html#sobre">Sobre</a></li>
+            <li class="nav-item"><a href="#" id="openModalBtn">Cadastrar</a></li>
+            <li class="nav-item">
+                <div class="login-container">
+                    <a href="login.html" class="login-button">Login</a>
+                </div>
+            </li>
+        </ul>
+        <div class="menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+    </nav>
+</header>
+
+    <main>
+
+        <div id="registerModal" class="modal">
+            <div class="modal-content">
+              <span class="close">&times;</span>
+              <h2>Escolha como deseja se cadastrar:</h2>
+              <button onclick="window.location.href='cadastroong.html'" class="modal-btn">Cadastrar como ONG</button>
+              <button onclick="window.location.href='cadastrousuario.html'" class="modal-btn">Cadastrar como Adotante</button>
+            </div>
+          </div>
+
+        <!--Home-->
+        <section class="home">
+            <div class="home-text">
+                <br>
+                <h4 class="text-h4">Dê um Lar, receba Amor!</h4>
+                <h1 class="text-h1">Explore nossos perfis de adoção e encontre seu novo melhor amigo.</h1>
+                <p>Nós estamos aqui para conectar corações e lares com animais incríveis que
+                estão esperando por uma nova chance de felicidade. Nossas ONGs parceiras
+                resgatam e cuidam de animais que precisam de um lar. Adote um amigo
+                peludo e transforme sua vida e a deles para sempre!
+                </p>
+                <a class="home-btn" href="index.html#animais">Conheça os Animais!</a>
+            </div>
+            <div class="home-img">
+                <img src="images\raiva-em-caes-e-gatos-1.webp" alt="gatinho silly">
+            </div>
+        </section>
+        
+        <!--Sobre Nós-->
+        <section id="sobre" class="sobre-nos">
+            <div class="sobre-info">
+                <h1 class="sobre">Nossa Missão</h1>
+                <p>Através da nossa plataforma, buscamos reduzir as dificuldades enfrentadas por ONGs e abrigos, oferecendo um meio eficiente para divulgar animais disponíveis para adoção e facilitar a doação de mantimentos. A Petstar também promove educação sobre adoção responsável e a importância de dar uma nova chance a pets que esperam por um lar.</p>
+            </div>
+        </section>
+
+
+
+
+        <section id="animais" class="animais">
+                <h2 class="animais-title">Adote!</h2>
+                <h3 class="descricao">Conheça os animais disponíveis.</h3>
+                <div class="layout-container">
+                    <!-- Filtros -->
+                    <div id="filterContainer">
+                        <input type="text" id="searchName" placeholder="Pesquisar por nome...">
+                        <select id="filterPorte">
+                            <option value="">Todos os Portes</option>
+                            <option value="Pequeno">Pequeno</option>
+                            <option value="Médio">Médio</option>
+                            <option value="Grande">Grande</option>
+                        </select>
+                        <select id="filterGenero">
+                            <option value="">Todos os Gêneros</option>
+                            <option value="Macho">Macho</option>
+                            <option value="Fêmea">Fêmea</option>
+                        </select>
+                        <button class="detalhes-btn" id="applyFiltersBtn">Aplicar Filtros</button>
+                    </div>
+        
+                    <!-- Lista de animais -->
+                    <div id="animal-list">
+                    </div>
+                </div>
+        </section>
+        
+
+
+    </main>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="scripts.js"></script>
+            <script>
+
+                //LISTA DE ANIMAIS
+                document.addEventListener("DOMContentLoaded", function() {
+                    const animalList = document.getElementById("animal-list");
+            
+                    // Função para carregar e exibir os animais
+                    function fetchAnimals() {
+                        console.log('fetchAnimals chamado');
+                        $.ajax({
+                            url: 'carregar_animais.php',
+                            type: 'GET',
+                            dataType: 'json',
+                            success: function(data) {
+                                console.log('Dados recebidos:', data);
+                                if (data.animais && data.animais.length > 0) {
+                                    displayAnimals(data.animais);
+                                } else {
+                                    animalList.innerHTML = "<p>Nenhum animal cadastrado.</p>";
+                                }
+                            },
+                            error: function(xhr, status, error) {
+                                console.error('Erro ao carregar animais:', xhr.responseText);
+                                animalList.innerHTML = "<p>Erro ao carregar animais.</p>";
+                            }
+                        });
+                    }
+                    function displayAnimals(animals) {
+                        animalList.innerHTML = ""; // Limpar a lista antes de preenchê-la novamente
+                
+                        animals.forEach(animal => {
+                            const animalCard = document.createElement("div");
+                            animalCard.classList.add("animal");
+                
+                            const image = document.createElement("img");
+                            image.src = animal.imagemanimal;
+                            image.alt = animal.nomeanimal;
+                
+                            const namePara = document.createElement("p");
+                            namePara.textContent = animal.nomeanimal;
+                            namePara.classList.add("animal-name");
+                
+                            const agePara = document.createElement("p");
+                            agePara.textContent = `Idade: ${animal.idadeanimal}`;
+                
+                            const genderPara = document.createElement("p");
+                            genderPara.textContent = `Gênero: ${animal.generoanimal}`;
+                
+                            const ongPara = document.createElement("p");
+                            ongPara.textContent = `ONG: ${animal.onganimal_nome}`;
+                
+                            const detailsButton = document.createElement("button");
+                            detailsButton.textContent = "Ver detalhes";
+                      
+                            console.log('Criando botão com ID:', animal.idanimal);
+                            console.log('Botão detalhes criado:', detailsButton);
+
+                            detailsButton.addEventListener('click', function() {
+                            const animalId = animal.idanimal;  // Captura o id do animal
+                            console.log(`Redirecionando para: detalhes.php?id=${animalId}`);
+                            
+
+                            window.location.href = `detalhes.php?id=${encodeURIComponent(animalId)}`;  // Redireciona com o ID
+                
+                        });
+                            
+                
+                            animalCard.appendChild(image);
+                            animalCard.appendChild(namePara);
+                            animalCard.appendChild(agePara);
+                            animalCard.appendChild(genderPara);
+                            animalCard.appendChild(ongPara);
+                            animalCard.appendChild(detailsButton);
+                
+                            animalList.appendChild(animalCard);
+                        });
+                    }
+                    
+
+            
+                    // Função para aplicar os filtros
+                    function applyFilters() {
+                        const filterPorte = document.getElementById("filterPorte").value;
+                        const filterGenero = document.getElementById("filterGenero").value;
+                        const searchName = document.getElementById("searchName").value.trim().toLowerCase();
+            
+                        $.ajax({
+                            url: 'carregar_animais.php', // URL do arquivo PHP que retorna a lista de animais
+                            type: 'GET',
+                            dataType: 'json',
+                            data: {
+                                porte: filterPorte,
+                                genero: filterGenero
+                                // Adicionar o filtro por nome se houver texto na barra de pesquisa
+                            },
+                            success: function(data) {
+                                let filteredAnimals = data.animais;
+            
+                                if (searchName !== '') {
+                                    filteredAnimals = filteredAnimals.filter(animal =>
+                                        animal.nomeanimal.toLowerCase().includes(searchName)
+                                    );
+                                }
+            
+                                if (filteredAnimals.length > 0) {
+                                    displayAnimals(filteredAnimals);
+                                } else {
+                                    animalList.innerHTML = "<p>Nenhum animal encontrado com os filtros selecionados.</p>";
+                                }
+                            },
+                            error: function(xhr, status, error) {
+                                console.error(xhr.responseText);
+                                animalList.innerHTML = "<p>Erro ao filtrar animais.</p>";
+                            }
+                        });
+                    }
+            
+                    // Função para aplicar o filtro de pesquisa por nome
+                    function applySearchFilter() {
+                        applyFilters(); // Chamando a função de aplicar filtros para atualizar a lista
+                    }
+            
+                    // Event listeners para os filtros e a barra de pesquisa
+                    document.getElementById("applyFiltersBtn").addEventListener('click', function() {
+                        applyFilters();
+                    });
+            
+                    document.getElementById("searchName").addEventListener('input', function() {
+                        applySearchFilter();
+                    });
+            
+                    // Carregar os animais ao carregar a página
+                    fetchAnimals();
+                });
+
+                // Referências aos elementos
+const modal = document.getElementById('registerModal');
+const openModalBtn = document.getElementById('openModalBtn');
+const closeModal = document.querySelector('.close');
+const ongBtn = document.getElementById('registerOngBtn');
+const adotanteBtn = document.getElementById('registerAdotanteBtn');
+
+// Função para abrir o modal
+openModalBtn.onclick = function() {
+  modal.style.display = 'block';
+}
+
+// Função para fechar o modal ao clicar no "X"
+closeModal.onclick = function() {
+  modal.style.display = 'none';
+}
+
+// Função para fechar o modal ao clicar fora dele
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = 'none';
+  }
+}
+
+// Ações ao clicar nos botões de cadastro
+ongBtn.onclick = function() {
+  window.location.href = 'cadastrar-ong.html'; // Redireciona para a página de cadastro ONG
+}
+
+adotanteBtn.onclick = function() {
+  window.location.href = 'cadastrar-adotante.html'; // Redireciona para a página de cadastro Adotante
+}
+
+</script>
+        
+           
+</main>
+<footer>
+    <div class="rodape">
+        <h3>2024.Trabalho de Conclusão de curso.</h3>
+    </div>
+    <div class="rodape-dupla">
+        <p>Igor Ribeiro de Sousa e Millena Albuquerque de Almeida</p>
+        <p class="fatec">FATEC de Guarulhos - Análise e Desenvolvimento de Sistemas</p>
+    </div>
+</footer>
+    <script src="script.js"></script>
+</body>
+</html>

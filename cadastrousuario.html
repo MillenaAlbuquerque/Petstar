@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="theme-color" content="#ffffff">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="style.css">
+    <title>Cadastro - Adotante</title>
+</head>
+<body>
+      <!--Navbar-->
+      <header>
+       
+
+        <style>
+ .popup {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #ffeb3b; /* cor de fundo fofa */
+    color: #000; /* cor do texto */
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    opacity: 0; /* comece invisível */
+    transition: opacity 0.5s ease-in-out;
+}
+
+.visible {
+    opacity: 1; /* torna visível */
+}
+
+ /* Classe para o efeito de tremor */
+ .shake {
+    animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+    0% { transform: translate(0); }
+    25% { transform: translate(-5px, 0); }
+    50% { transform: translate(5px, 0); }
+    75% { transform: translate(-5px, 0); }
+    100% { transform: translate(0); }
+}
+
+
+/* Esconda o pop-up inicialmente */
+.hidden {
+    display: none;
+}
+        </style>
+
+    </header>
+    <main>
+        <div class="containercad">
+            <div class="form-container">
+                <form id="cadastroForm" method="POST" action="cadastrousuario.php" class="form">
+                    <h1>Cadastre-se</h1>
+                    <div class="linha"></div>
+                    <div class="info-model">Para dar continuidade, preencha os campos a seguir:</div>
+                    <div class="input-group">
+                        <div class="campo">
+                            <label for="nome">Nome:</label>
+                            <input type="text" id="nome" name="nome" placeholder="Digite seu nome..." required>
+                        </div>
+                        <div class="campo">
+                            <label for="datanasc">Data de Nascimento:</label>
+                            <input type="date" id="datanasc" name="datanasc" required>
+                        </div>
+                        <div class="campo">
+                            <label for="tel">Telefone:</label>
+                            <input type="tel" id="tel" name="fone" placeholder="(xx) xxxx-xxxx" required inputmode="numeric" pattern="[0-9]*">
+                        </div>
+                        <div class="campo">
+                            <label for="email">E-mail:</label>
+                            <input type="email" id="email" name="email" placeholder="Digite seu e-mail..." required>
+                        </div>
+                        <div class="campo">
+                            <label for="cidade">Cidade:</label>
+                            <select id="cidade" name="cidade" required>
+                                <option value="">Selecione uma cidade...</option>
+                                <option value="São Paulo">São Paulo</option>
+                                <option value="Campinas">Campinas</option>
+                                <option value="São Bernardo do Campo">São Bernardo do Campo</option>
+                                <option value="São José dos Campos">São José dos Campos</option>
+                                <option value="Sorocaba">Sorocaba</option>
+                                <option value="Ribeirão Preto">Ribeirão Preto</option>
+                                <option value="São Vicente">São Vicente</option>
+                                <option value="Diadema">Diadema</option>
+                                <option value="Osasco">Osasco</option>
+                                <option value="Mauá">Mauá</option>
+                                <option value="Guarulhos">Guarulhos</option>
+                                <option value="Bauru">Bauru</option>
+                                <option value="Santo André">Santo André</option>
+                                <option value="Jundiaí">Jundiaí</option>
+                                <option value="Barueri">Barueri</option>
+                                <option value="Itapevi">Itapevi</option>
+                                <option value="Piracicaba">Piracicaba</option>
+                                <option value="Franco da Rocha">Franco da Rocha</option>
+                                <option value="Bragança Paulista">Bragança Paulista</option>
+                                <option value="Taboão da Serra">Taboão da Serra</option>
+                                <option value="Indaiatuba">Indaiatuba</option>
+                                <!-- Adicione mais cidades conforme necessário -->
+                            </select>
+                        </div>
+                        <div class="campo">
+                            <label for="endereco">Endereço:</label>
+                            <input type="text" id="endereco" name="endereco" placeholder="Digite seu endereço..." required>
+                        </div>
+                        <div class="campo">
+                            <label for="senha">Senha:</label>
+                            <input type="password" id="senha" name="senha" placeholder="Digite sua senha..." required>
+                        </div>
+                    </div>
+                    
+                    <button class="enviar-btn" type="submit">Concluir Cadastro</button>
+                </form>
+            </div>
+        </div>
+
+        <div id="success-popup" class="popup hidden">
+            <p>Cadastro realizado com sucesso!</p>
+        </div>
+        
+        
+    </main>
+    <script>
+        $(document).ready(function() {
+            $('#cadastroForm').submit(function(event) {
+                event.preventDefault(); // Impede o envio padrão do formulário
+        
+                const formData = new FormData(this);
+        
+                $.ajax({
+                    url: $(this).attr('action'),
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        if (response.includes("Dados inseridos com sucesso!")) {
+                            showSuccessPopup(); // Exibe o popup de sucesso
+                        } else {
+                            alert("Erro ao enviar dados: " + response);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Erro na requisição:", error);
+                        alert("Ocorreu um erro. Tente novamente mais tarde.");
+                    }
+                });
+            });
+        
+            function showSuccessPopup() {
+                const popup = $('#success-popup');
+                popup.removeClass('hidden').addClass('visible shake'); // Exibe e adiciona efeito shake
+        
+                // Oculta o popup após 3 segundos
+        setTimeout(() => {
+            popup.removeClass('visible shake').addClass('hidden');
+            window.location.href = 'login.html'; // Redireciona após ocultar o popup
+        }, 3000);
+            }
+        });
+        
+
+        document.getElementById("tel").addEventListener("input", function (e) {
+            // Remove qualquer caractere que não seja número
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
+
+
+    </script>
+</body>
+</html>

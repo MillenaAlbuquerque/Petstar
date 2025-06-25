@@ -1,0 +1,662 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Poppins:wght@300;400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+    list-style: none;
+    text-decoration: none;
+}
+
+:root {
+    --red: #d63a25;
+    --white: #fff;
+    --dark: #1e1c2a;
+    --greendark: #38a269;
+    --green: #90d1ae;
+    --p: #343334;
+}
+
+body {
+    /* color: var(--dark); */
+    /* background: var(--white); */
+}
+
+
+
+
+.navigation {
+    display: flex;
+    justify-content: space-between;
+    padding: 18px 40px;
+    box-shadow: 0 0.1rem 0.5rem #ccc;
+    width: 100%;
+    background: var(--green);
+    transition: all 0.5s;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+}
+
+.navigation .logo {
+    color: var(--greendark);
+    font-size: 1.7rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    width: 60px;
+    height: auto;
+    margin-right: 10px;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+}
+
+.logo h3 {
+    color: var(--dark);
+}
+
+.navigation ul {
+    display: flex;
+    align-items: center;
+    gap: 3rem; /* Ajuste de gap reduzido para melhorar o espaçamento */
+}
+
+.navigation ul li a {
+    color: var(--dark);
+    font-size: 17px; /* Corrigido ponto e vírgula para dois pontos */
+    font-weight: 500;
+    transition: all 0.5s;
+}
+
+.navigation ul li a:hover {
+    color: var(--greendark);
+}
+
+.login-btn {
+    padding: 15px 45px;
+    background: var(--greendark);
+    color: var(--white);
+    border-radius: 10px;
+    border: none;
+    font-weight: 500;
+    transition: all 0.5s;
+}
+
+.login-btn:hover {
+    background: var(--green);
+    transition: 1s;
+}
+
+.menu {
+    cursor: pointer;
+    display: none;
+}
+
+.menu .bar {
+    display: block;
+    width: 28px;
+    height: 3px;
+    border-radius: 3px;
+    background: var(--dark);
+    margin: 5px auto;
+    transition: all 0.3s;
+}
+
+.menu .bar:nth-child(1),
+.menu .bar:nth-child(3) {
+    background: var(--greendark);
+}
+
+.home {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 10%;
+}
+
+.home-text {
+    max-width: 37rem;
+}
+
+.home-text .text-h4 {
+    font-size: 1.5rem;
+    color: var(--greendark);
+    margin-bottom: 1rem;
+    margin-top: 3rem;
+}
+
+.home-text .text-h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    line-height: 4rem; 
+}
+
+.home-text p {
+    margin-bottom: 4rem;
+}
+
+.home-btn {
+    padding: 15px 45px;
+    background: var(--greendark);
+    color: var(--white);
+    border-radius: 10px;
+    font-weight: 500;
+    transition: all 0.5s;
+    border: none;
+}
+
+.home-btn:hover {
+    background: var(--green);
+}
+
+.home-img img {
+    width: 140%;
+}
+
+@media (max-width: 785px) {
+    .navigation {
+        padding: 18px 20px;
+    }
+
+    .menu {
+        display: block;
+    }
+
+    .menu.ativo .bar:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+
+    .menu.ativo .bar:nth-child(2) {
+        opacity: 0;
+    }
+
+    .menu.ativo .bar:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+    }
+
+    .nav-menu {
+        position: fixed;
+        right: -100%;
+        top: 70px;
+        width: 100%;
+        height: 100%;
+        flex-direction: column;
+        background: var(--white);
+        gap: -10px;
+        transition: 0.3s;
+    }
+
+    .nav-menu.ativo {
+        right: 0;
+    }
+
+    .nav-item {
+        margin: 16px 0;
+    }
+
+    .home,
+    .animal-detalhes {
+        padding: 100px 2%;
+        flex-direction: column;
+        text-align: center;
+        overflow: hidden;
+        gap: 5rem;
+    }
+
+    .home .text-h4,
+    .detalhes-info h2 {
+        font-size: 15px;
+    }
+
+    .home .text-h1,
+    .detalhes-info h1 {
+        font-size: 2.5rem;
+        line-height: 3rem;
+    }
+
+    .home p,
+    .detalhes-info p {
+        font-size: 15px;
+        text-align: center;
+    }
+
+    .home-img,
+    .adotar-img {
+        width: 125%;
+    }
+}
+
+
+
+.containercad {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-image: url('https://images.unsplash.com/photo-1450778869180-41d0601e046e?q=80&w=1972&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+    margin: 0; /* Remove margens padrão */
+    padding: 20px;
+}
+
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto; /* Centraliza horizontalmente */
+}
+
+.form {
+    background: var(--green);
+    padding: 40px;
+    border: 1px solid #888;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centraliza conteúdo verticalmente */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.modal h1 {
+    color: var(--dark);
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.linha {
+    width: 160px;
+    height: 5px;
+    background: var(--greendark);
+    border-radius: 9999px;
+    margin: 10px auto;
+}
+
+.info-model {
+    text-align: center;
+    color: var(--dark);
+    margin-bottom: 20px;
+}
+
+.enviar-btn {
+    padding: 12px 50px;
+    margin-top: 20px;
+    background-color: var(--greendark);
+    color: var(--white);
+    border-radius: 10px;
+    font-weight: 500;
+    transition: all 0.3s;
+    border: none;
+    cursor: pointer;
+}
+
+.enviar-btn:hover {
+    background: var(--green);
+}
+
+.input-group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 20px 0;
+    width: 100%;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    width: calc(50% - 20px);
+}
+
+.campo label {
+    margin-bottom: 8px;
+}
+
+.campo input {
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding: 12px;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s ease-in-out;
+}
+
+
+.campo input:hover,
+.campo input:focus {
+    border-color: var(--greendark);
+}
+
+.campo input::placeholder {
+    color: gray;
+}
+
+.campo select {
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding: 12px;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s ease-in-out;
+    width: 100%; /* Adiciona largura total */
+}
+
+.option{
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding: 12px;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s ease-in-out;
+}
+
+.option::placeholder {
+    color: gray;
+}
+
+.campo select:hover,
+.campo select:focus {
+    border-color: var(--greendark);
+}
+
+.campo input::placeholder {
+    color: gray;
+}
+
+@media (max-width: 768px) {
+    .form-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .form {
+        width: 100%;
+        padding: 30px;
+        max-width: 100%;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    .campo {
+        width: 100%;
+    }
+
+    .campo input {
+        width: 100%;
+    }
+}
+
+
+
+//Sobre nós
+section.main{
+    background-image: url('https://s3.ap-southeast-1.amazonaws.com/lasertag.com/wp-content/uploads/2020/12/14021638/hero-bg.jpg');
+    padding: 30px 0;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat; 
+    background-attachment: fixed; /*esse que cria aquele efeito de descer a imagem*/
+}
+
+
+
+
+footer{
+    background-color: var(--green);
+    margin-top: 2rem;
+    padding: 20px 0;
+    border-top: 1px solid rgb(200, 200, 200);
+    font-size: 14px;
+}
+
+.rodape{
+    color: var(--dark);
+    padding: 10px 0;
+    text-align: center;
+}
+
+.rodape-dupla{
+    color: var(--greendark);
+    text-align: center;
+    padding: 5px 0;
+}
+
+.rodape-dupla .fatec{
+    font-style: italic;
+}
+
+
+.descricao {
+    color: gray;
+    font-size: 19px;
+    margin: 10px 0;
+    margin-bottom: 2rem;
+    margin-top: 2rem;
+}
+
+
+/* Estilos para a seção "Sobre Nós" */
+.sobre-nos {
+    position: relative; /* Define um contexto de posicionamento para a imagem de fundo */
+    height: 60vh; /* Defina a altura da seção para cobrir a tela inteira */
+    background-image: url('https://img.freepik.com/fotos-gratis/mulher-brincando-com-caes-de-resgate-em-abrigo_23-2148682984.jpg?t=st=1711251639~exp=1711255239~hmac=834f07b7eb0fbbec8c02a635b03a87c8d4e2209abbbe77de8c0b76c6d295e0f7&w=826'); /* Substitua 'sobre-nos-background.jpg' pelo caminho da sua imagem de fundo */
+    background-size: cover; /* Redimensiona a imagem para cobrir todo o contêiner */
+    background-position: center; /* Centraliza a imagem na seção */
+    background-attachment: fixed;
+}
+
+/* Estilos para o conteúdo da seção "Sobre Nós" */
+.sobre-info {
+    position: absolute; /* Posiciona o conteúdo de forma absoluta dentro da seção */
+    top: 50%; /* Posiciona o conteúdo a 50% da altura da seção */
+    left: 50%; /* Posiciona o conteúdo a 50% da largura da seção */
+    transform: translate(-50%, -50%); /* Move o conteúdo para o centro */
+    text-align: center; /* Alinha o texto ao centro */
+    color: #fff; /* Cor do texto */
+    padding: 20px; /* Adiciona um espaçamento interno */
+}
+
+/* Estilos para o texto */
+.sobre-info h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    //color: var(--dark);
+}
+
+.sobre-info p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+}
+
+/* Estilo da modal */
+.modal {
+    display: none; /* Oculto por padrão */
+    position: fixed; /* Fixo na tela */
+    z-index: 1000; /* Sobreposição */
+    left: 0;
+    top: 0;
+    width: 100%; /* Largura total */
+    height: 100%; /* Altura total */
+    overflow: auto; /* Rolagem se necessário */
+    background-color: rgba(0, 0, 0, 0.5); /* Fundo escuro com opacidade */
+}
+
+/* Conteúdo da modal */
+.modal-content {
+    background-color: white; /* Fundo branco */
+    margin: 15% auto; /* Margens automáticas para centralizar */
+    padding: 20px;
+    border: 1px solid #888; /* Borda */
+    border-radius: 10px; /* Cantos arredondados */
+    width: 150%; /* Largura da modal */
+    max-width: 1000px; /* Largura máxima */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra */
+}
+
+/* Estilo do botão de fechar */
+.close {
+    color: #aaa; /* Cor do botão */
+    float: right; /* Posiciona à direita */
+    font-size: 28px; /* Tamanho da fonte */
+    font-weight: bold; /* Negrito */
+}
+
+/* Efeito ao passar o mouse sobre o botão de fechar */
+.close:hover,
+.close:focus {
+    color: black; /* Muda a cor ao passar o mouse */
+    text-decoration: none; /* Remove o sublinhado */
+    cursor: pointer; /* Muda o cursor */
+}
+
+/* Tabela */
+table {
+    width: 100%; /* Largura total */
+    border-collapse: collapse; /* Colapsa as bordas */
+    border-radius: 8px;
+}
+
+th, td {
+    color: #343334;
+    padding: 10px; /* Espaçamento */
+    text-align: left; /* Alinhamento à esquerda */
+    border-bottom: 1px solid #ddd; /* Borda inferior */
+}
+
+h2 {
+    color: #343334;
+    padding: 10px; /* Espaçamento */
+    text-align: center; /* Alinhamento à esquerda */
+    border-bottom: 1px solid #ddd; /* Borda inferior */
+}
+
+th {
+    background-color:  white; /* Fundo claro */
+    border-radius: 8px;
+}
+
+/* Efeito ao passar o mouse sobre as linhas da tabela */
+tr:hover {
+    background-color: #90d1ae; /* Muda o fundo ao passar o mouse */
+}
+
+tbody{
+    border-radius: 8px;
+}
+
+
+
+:root {
+    --greendark: #38a269;
+    --green: #90d1ae;
+    --button-hover-color: #218838;
+    --text-color: #333;
+}
+
+/* Modal */
+.modal-doacao {
+    display: none; /* Modal começa oculta */
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    //display: flex;
+    align-items: center; /* Centraliza verticalmente */
+    justify-content: center; /* Centraliza horizontalmente */
+    padding: 20px;
+}
+
+.modal-doacao-content {
+    animation: modalFadeIn 0.5s ease-in-out;
+    position: relative;
+    background: #fff;
+    margin-left:25rem;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    
+}
+
+/* Botão Fechar */
+.modal-doacao-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 1.5rem;
+    color: #888;
+    cursor: pointer;
+}
+
+/* Formulário */
+.modal-doacao-form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+label {
+    font-weight: 400;
+    font-size: 1rem;
+    color: var(--text-color);
+    margin-bottom: 8px;
+}
+
+select, input[type="text"] {
+    width: 80%;
+    padding: 10px;
+    font-family: 'Poppins', sans-serif;
+    border: 1px solid var(--greendark);
+    border-radius: 8px;
+    font-size: 0.9rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+select:focus, input[type="text"]:focus {
+    border-color: var(--green);
+    box-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+    outline: none;
+}
+
+/* Botão de Doação */
+.modal-doacao-button-container {
+    display: flex;
+    justify-content: center;
+}
+
+button {
+    background-color: var(--greendark);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+button:hover {
+    background-color: var(--button-hover-color);
+}
+</style>
+

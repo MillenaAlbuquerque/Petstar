@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="theme-color" content="#ffffff">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="style.css">
+    <title>Cadastro - ONG</title>
+</head>
+<body>
+      <!--Navbar-->
+      <header>
+        <style>
+            /* Estilo do pop-up */
+        .popup {
+            display: none;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .popup h2 {
+            margin-bottom: 10px;
+        }
+
+        .popup button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .popup button:hover {
+            background-color: #45a049;
+        }
+
+
+        </style>
+    </header>
+    <main>
+        <div class="containercad">
+        <div class="form-container">
+            <form id="cadastroForm" method="POST" action="cadastroong.php" class="form">
+                <h1>Cadastre-se</h1>
+                <div class="linha"></div>
+                <div class="info-model">Para dar continuidade, preencha os campos a seguir:</div>
+                <div class="input-group">
+                    <div class="campo">
+                        <label for="nomeong">Nome:</label>
+                        <input type="text" id="nomeong" name="nomeong" placeholder="Digite o nome da ONG..." required>
+                    </div>
+                    <div class="campo">
+                        <label for="telong">Telefone:</label>
+                        <input type="tel" id="telong" name="telong" placeholder="(xx) xxxx-xxxx" required>
+                    </div>
+                    <div class="campo">
+                        <label for="cidadeong">Cidade:</label>
+                        <select id="cidadeong" name="cidadeong" required>
+                            <option value="">Selecione uma cidade...</option>
+                            <option value="São Paulo">São Paulo</option>
+                            <option value="Campinas">Campinas</option>
+                            <option value="São Bernardo do Campo">São Bernardo do Campo</option>
+                            <option value="São José dos Campos">São José dos Campos</option>
+                            <option value="Sorocaba">Sorocaba</option>
+                            <option value="Ribeirão Preto">Ribeirão Preto</option>
+                            <option value="São Vicente">São Vicente</option>
+                            <option value="Diadema">Diadema</option>
+                            <option value="Osasco">Osasco</option>
+                            <option value="Mauá">Mauá</option>
+                            <option value="Guarulhos">Guarulhos</option>
+                            <option value="Bauru">Bauru</option>
+                            <option value="Santo André">Santo André</option>
+                            <option value="Jundiaí">Jundiaí</option>
+                            <option value="Barueri">Barueri</option>
+                            <option value="Itapevi">Itapevi</option>
+                            <option value="Piracicaba">Piracicaba</option>
+                            <option value="Franco da Rocha">Franco da Rocha</option>
+                            <option value="Bragança Paulista">Bragança Paulista</option>
+                            <option value="Taboão da Serra">Taboão da Serra</option>
+                            <option value="Indaiatuba">Indaiatuba</option>
+                            <!-- Adicione mais cidades conforme necessário -->
+                        </select>
+                    </div>
+                    <div class="campo">
+                        <label for="enderecoong">Endereço:</label>
+                        <input type="text" id="enderecoong" name="enderecoong" placeholder="Digite o endereço da ONG..." required>
+                    </div>
+                    <div class="campo">
+                        <label for="emailong">E-mail:</label>
+                        <input type="email" id="emailong" name="emailong" placeholder="Digite o e-mail da ONG..." required>
+                    </div>
+                    <div class="campo">
+                        <label for="senhaong">Senha:</label>
+                        <input type="password" id="senhaong" name="senhaong" placeholder="Digite sua senha..." required>
+                    </div>
+                </div>
+                <button class="enviar-btn" type="submit">Concluir Cadastro</button>
+            </form>
+        </div>
+        </div>
+    </main>
+
+
+    <!-- Popup -->
+    <div id="sucess-popup" class="popup hidden">
+        <h2>Obrigado pelo cadastro!</h2>
+        <p>Iremos analisar suas informações.</p>
+        <button onclick="fecharPopup()">Fechar</button>
+    </div>
+
+</main>
+
+    
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function() {
+            var form = document.getElementById("cadastroForm");
+            var popup = document.getElementById("sucess-popup");
+
+            if (form) {
+                form.addEventListener("submit", function(event) {
+                    event.preventDefault();
+                    var formData = new FormData(form);
+
+                    fetch(form.action, {
+                        method: form.method,
+                        body: formData
+                    }).then(response => {
+                        console.log("Response:", response);
+                        return response.text();
+                    })
+                    .then(result => {
+                        console.log("Result:", result); 
+                        if (result.includes("success")) {
+                            popup.style.display = "block";
+                        } else {
+                            alert("Erro ao enviar dados. Tente novamente.");
+                        }
+                    }).catch(error => {
+                        console.error("Erro:", error);
+                    });
+                    
+                });
+            }
+        });
+
+     // Função para mostrar o popup de sucesso
+function showSuccessPopup() {
+    const popup = document.getElementById('success-popup');
+    popup.classList.remove('hidden');
+    popup.classList.add('visible', 'shake'); // Adiciona a classe shake
+
+    // Oculta o pop-up após 3 segundos
+    setTimeout(() => {
+        popup.classList.remove('visible', 'shake'); // Remove a classe shake
+        popup.classList.add('hidden');
+    }, 3000);
+}
+
+    </script>
+</body>
+</html>    

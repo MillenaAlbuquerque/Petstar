@@ -1,0 +1,7 @@
+# Permitir métodos de requisição GET e POST
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    # Permitir todos os métodos de requisição
+    RewriteCond %{REQUEST_METHOD} ^(GET|POST|PUT|DELETE|HEAD)$
+    RewriteRule .* - [L]
+</IfModule>

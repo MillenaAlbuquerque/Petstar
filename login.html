@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <title>Entrar</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+        :root {
+            --primary-color: #28a745; /* Cor primária */
+            --secondary-color: #218838; /* Cor secundária */
+            --background-color: #f0f0f0; /* Cor de fundo */
+            --text-color: #333; /* Cor do texto */
+            --input-border-color: #ccc; /* Cor da borda dos inputs */
+            --button-hover-color: #218838; /* Cor do botão ao passar o mouse */
+                --red: #d63a25;
+                --white: #fff;
+                --dark: #1e1c2a;
+                --greendark: #38a269;
+                --green: #90d1ae;
+                --p: #343334;
+        }
+
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            font-family: 'Poppins', sans-serif; /* Aplicando a fonte ao site inteiro */
+        }
+
+        .login-image {
+            flex: 1;
+            background-size: cover;
+            background-position: center;
+            border-radius: 10px 0 0 10px;
+            
+        }
+
+        .login-image img{
+            flex: 1; /* Isso permite que a imagem ocupe metade da tela */
+            background-size: cover; /* Faz a imagem cobrir todo o espaço disponível */
+            background-position: center; /* Centraliza a imagem */
+            border-radius: 10px 0 0 10px; /* Arredondar os cantos da imagem */
+            width: 100%; /* Largura fixa de 50% */
+            height: 100vh; /* Altura fixa da viewport */
+        }
+        .login-container {
+            flex: 1; 
+            background-color: #90d1ae;
+            padding: 40px;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 450px;
+            width: 100%;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+/* Estilo para o título h1 */
+h1 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400; /* Peso mais forte para destaque */
+    font-size: 1.2rem; /* Tamanho ajustado para destaque */
+    color: white; /* Cor do texto */
+    margin-bottom: 20px; /* Espaçamento inferior */
+}
+
+/* Estilo para os rótulos (labels) */
+label {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400; /* Peso normal */
+    font-size: 1rem; /* Tamanho da fonte ajustado */
+    color: white; /* Cor do texto */
+    margin-top: 2rem; /* Espaçamento inferior */
+}
+
+        .login-container .campo {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+        }
+        
+        .login-container input[type="email"],
+        .login-container input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--greendark);
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            font-size: 0.8rem;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        
+        .login-container input[type="email"]:focus,
+        .login-container input[type="password"]:focus {
+            border-color: var(--green);
+            box-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+            outline: none;
+        }
+
+        .login-container input[type="email"],
+.login-container input[type="password"],
+.enviar-btn {
+    font-family: 'Poppins', sans-serif; /* Aplicando a fonte Poppins aos inputs e botão */
+    font-size: 0.8rem; /* Tamanho da fonte ajustado */
+    font-weight: 400; /* Peso da fonte */
+}
+
+        
+        .enviar-btn {
+            background-color: #38a269;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 2rem;;
+            transition: background-color 0.3s, box-shadow 0.3s;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .enviar-btn:hover {
+            background-color: var(--button-hover-color);
+        }
+        
+
+        #mensagem {
+            margin-top: 20px;
+            color: red;
+        }
+
+
+ 
+
+        .login-type-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .login-type-btn {
+            font-family: 'Poppins', sans-serif;
+            background-color: #d1e7dd;
+            color: #555;
+            border: none;
+            border-radius: 8px;
+            padding: 15px 50px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+            font-size: 1rem;
+        }
+
+        .login-type-btn.active {
+            background-color: #38a269;
+            color: white;
+        }
+
+        .login-type-btn:hover {
+            background-color: #90d1ae;
+            color: white;
+        }
+
+
+
+        /* Estilos do Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 400px;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.9);
+
+}
+
+.modal h2 {
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: var(--p);
+}
+
+.modal-btn {
+    font-family: 'Poppins', sans-serif;
+    padding: 10px 20px;
+    margin: 10px;
+    background-color: var(--greendark);
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 2px;
+}
+
+.close {
+    float: right;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+/* Estilo para o botão "Cadastrar-se" */
+.register-btn {
+    background-color: transparent;
+    color: var(--primary-color); /* A mesma cor usada no site */
+    border: none;
+    font-size: 0.9rem; /* Tamanho menor */
+    margin-top: 10px; /* Espaçamento superior para separá-lo dos outros botões */
+    cursor: pointer;
+    text-decoration: underline; /* Sublinhado para parecer um link */
+    font-family: 'Poppins', sans-serif; /* Aplicar a mesma fonte do site */
+}
+
+.register-btn:hover {
+    color: var(--secondary-color); /* Mudar a cor no hover */
+    text-decoration: none; /* Remover o sublinhado ao passar o mouse */
+}
+
+/* Centralizar o botão */
+form {
+    text-align: center; /* Centraliza o conteúdo do formulário */
+}
+
+
+ /* Adicione estilos para o pop-up */
+ .popup {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #ffeb3b; /* cor de fundo fofa */
+    color: #000; /* cor do texto */
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    opacity: 0; /* comece invisível */
+    transition: opacity 0.5s ease-in-out;
+    
+}
+
+.visible {
+    opacity: 1; /* torna visível */
+}
+
+ /* Classe para o efeito de tremor */
+ .shake {
+    animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+    0% { transform: translate(0); }
+    25% { transform: translate(-5px, 0); }
+    50% { transform: translate(5px, 0); }
+    75% { transform: translate(-5px, 0); }
+    100% { transform: translate(0); }
+}
+
+
+/* Esconda o pop-up inicialmente */
+.hidden {
+    display: none;
+}
+
+</style>
+
+
+</head>
+<div class="login-image">
+    <img src="https://images.unsplash.com/photo-1668934804957-e6f649875718?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+</div>
+<div class="login-container">
+    <h1>Selecione o seu tipo de login:</h1>
+    <div class="login-type-container">
+        <button id="adotanteBtn" class="login-type-btn active">Adotante</button>
+        <button id="ongBtn" class="login-type-btn">ONG</button>
+    </div>
+
+    <form id="loginForm" method="POST">
+        <div class="input-group">
+            <div class="campo">
+                <label for="email">E-mail:</label>
+                <input type="email" id="email" name="email" placeholder="Digite seu e-mail..." required>
+            </div>
+            <br/>
+            <div class="campo">
+                <label for="senha">Senha:</label>
+                <input type="password" id="senha" name="senha" placeholder="Digite sua senha..." required>
+            </div>
+        </div>
+        <button class="enviar-btn" type="submit">Entrar</button>
+        <div>
+            <h1>ou <button type="button" class="register-btn" id="registerButton">Cadastrar-se</button></h1>
+        </div>
+    </form>
+    <div id="mensagem"></div>
+</div>
+
+<div id="registerModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Como deseja se cadastrar?</h2>
+      <button onclick="window.location.href='cadastroong.html'" class="modal-btn">Sou responsável por uma ONG</button>
+      <button onclick="window.location.href='cadastrousuario.html'" class="modal-btn">Tenho interesse em adotar</button>
+    </div>
+</div>
+    
+
+<div id="success-popup" class="popup hidden">
+    <p>Login realizado com sucesso!</p>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        let loginType = 'usuario'; // Tipo de login padrão
+
+        // Seleciona o tipo de login
+        $('#adotanteBtn').click(function() {
+            loginType = 'usuario';
+            $(this).addClass('active');
+            $('#ongBtn').removeClass('active');
+        });
+
+        $('#ongBtn').click(function() {
+            loginType = 'ong';
+            $(this).addClass('active');
+            $('#adotanteBtn').removeClass('active');
+        });
+
+        // Tratamento do envio do formulário
+        $('#loginForm').submit(function(event) {
+            event.preventDefault(); // Impede o envio padrão do formulário
+
+            const formData = {
+                email: $('#email').val(),
+                senha: $('#senha').val()
+            };
+
+            const actionUrl = loginType === 'usuario' ? 'login.php' : 'loginong.php';
+
+            $.ajax({
+                url: actionUrl,
+                type: 'POST',
+                data: formData,
+                dataType: 'json',
+                success: function(response) {
+                    console.log("Resposta recebida:", response); // Log da resposta para inspeção
+                    if (response.success) {
+                        showSuccessPopup(); // Exibe o popup de sucesso
+                        // Redireciona baseado no tipo de login
+                        setTimeout(() => {
+                            // Redireciona para a página correspondente ao tipo de login
+                            if (loginType === 'usuario') {
+                                window.location.href = 'painelusuarios.php';
+                            } else if (loginType === 'ong') {
+                                window.location.href = 'painelong.php';
+                            } else {
+                                console.error("Tipo de login desconhecido:", loginType);
+                                $('#mensagem').text("Tipo de login não reconhecido.");
+                            }
+                        }, 2000);
+                    } else {
+                        $('#mensagem').text(response.message || "Erro no login.");
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("Erro na requisição:", xhr.responseText);
+                    console.error("Status:", status);
+                    console.error("Erro:", error);
+                    $('#mensagem').text("Ocorreu um erro. Tente novamente mais tarde.");
+                }
+            });
+        });
+
+        // Função para mostrar o popup de sucesso
+        function showSuccessPopup() {
+            const popup = $('#success-popup');
+            popup.removeClass('hidden').addClass('visible shake'); // Adiciona a classe shake
+
+            // Oculta o pop-up após 3 segundos
+            setTimeout(() => {
+                popup.removeClass('visible shake'); // Remove a classe shake
+                popup.addClass('hidden');
+            }, 3000);
+        }
+
+        // Abrir o modal ao clicar no botão "Cadastrar-se"
+        $('#registerButton').click(function() {
+            $('#registerModal').show();
+        });
+
+        // Fechar o modal ao clicar no "X"
+        $('.close').click(function() {
+            $('#registerModal').hide();
+        });
+
+        // Fechar o modal ao clicar fora da área de conteúdo
+        $(window).click(function(event) {
+            if (event.target === $('#registerModal')[0]) {
+                $('#registerModal').hide();
+            }
+        });
+    });
+</script>
+
+
+</body>
+</html>
