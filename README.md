@@ -19,11 +19,11 @@ A plataforma permite visualizar animais disponíveis, acessar detalhes e iniciar
 
 **🛠️ Tecnologias utilizadas:**
 
-Frontend: HTML, CSS, JavaScript
-Backend: PHP
-Banco de dados: MySQL
-Outros:
-PHPMailer (envio de e-mails)
+Frontend: HTML, CSS, JavaScript</br>
+Backend: PHP</br>
+Banco de dados: MySQL</br>
+Outros:</br>
+PHPMailer (envio de e-mails)</br>
 Typeform (coleta de dados)
 
 **📷 Screenshots**
